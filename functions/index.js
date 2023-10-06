@@ -52,6 +52,23 @@ app.get("/getTaskById/:id", (req, res) => {
   return res.status(200).send(task);
 });
 
+// POST Endpoint for å markere en oppgave som "done" eller "not done" via URL-parameter
+app.post("/setTaskDone/:id", (req, res) => {
+  const { id } = req.params;
+  const { done } = req.query; // Få "done" fra query parameter
+
+  const taskIndex = tasks.findIndex((t) => t.id === parseInt(id, 10));
+
+  if (taskIndex === -1) {
+    return res.status(404).send({ error: "Oppgave ikke funnet" });
+  }
+
+  // Konverter "done" til boolean. Dette er litt triksy siden query-parametere er alltid strings.
+  const isDone = done === 'true';
+  
+  tasks[taskIndex].done = isDone;
+  return res.status(200).send(tasks[taskIndex]);
+});
 
 // Eksporterer vår Express-oppsett til Firebase
 exports.api = functions.https.onRequest(app);

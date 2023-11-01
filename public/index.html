@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Velkommen til Vårt Firebase Univers!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
-    <!-- ... -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-    <style media="screen">
-        body { background: #F2F2F2; color: #333; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
-        #melding { background: #ffffff; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        #melding h2 { color: #007BFF; font-weight: 600; font-size: 24px; margin: 0 0 16px; }
-        #melding p { line-height: 140%; margin: 16px 0; font-size: 16px; }
-    </style>
+  <title>Task List</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      fetch('https://space-50ed0.web.app/us-central1/api/tasks')
+      .then(response => response.json())
+      .then(data => {
+        const taskList = document.getElementById("taskList");
+        data.forEach(task => {
+          const listItem = document.createElement("li");
+          listItem.textContent = task.name;  // Antar at 'name' er en egenskap for hver task
+          taskList.appendChild(listItem);
+        });
+      })
+      .catch(error => {
+        console.error('Det oppstod en feil:', error);
+      });
+    });
+  </script>
 </head>
 <body>
-    <div id="melding">
-        <h2>Heisann!</h2>
-        <p>Du ser denne siden fordi Firebase Hosting er satt opp som en drøm. Kanskje på tide å kode noe helt rått nå, hva?</p>
-        <p>May the code be with you!</p>
-    </div>
-    <script>
-        // Ditt Firebase kode her...
-    </script>
+  <h1>Task List</h1>
+  <ul id="taskList">
+    <!-- Tasks vil bli listet her -->
+  </ul>
 </body>
 </html>
